@@ -30,6 +30,12 @@ export default class Fox {
         this.model.position.set(0, -.5, 0)
         this.scene.add(this.model)
 
+        this.model.traverse((child) => {
+            if(child instanceof THREE.Mesh){
+                child.castShadow = true;
+            }
+        })
+
         this.head = this.model.children[1]
         this.body = this.model.children[0]
         this.bottom = this.model.children[3]
@@ -52,7 +58,11 @@ export default class Fox {
                 opacity: 0
             })
         )
-        this.cursorLight = new THREE.PointLight(0xffffff, 4)
+        this.cursorLight = new THREE.PointLight(0xAEFAFF, 8)
+        this.cursorLight.castShadow = true
+        this.cursorLight.shadow.camera.far = 15
+        this.cursorLight.shadow.mapSize.set(1024, 1024)
+        this.cursorLight.shadow.normalBias = 0.05
         this.lookAtMesh.position.z = 2
 
         this.lookAtMesh.add(this.cursorLight)

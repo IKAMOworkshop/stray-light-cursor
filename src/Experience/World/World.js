@@ -1,4 +1,5 @@
 import Experience from "../Experience";
+import Floor from "./Floor.js"
 import Environment from "./Environment";
 import Robot from "./Robot";
 
@@ -11,6 +12,7 @@ export default class World{
         this.resources.on('ready', () => {
             // Setup
             this.robot = new Robot();
+            this.floor = new Floor();
             this.environment = new Environment();
         })
     }

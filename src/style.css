@@ -8,6 +8,8 @@ html,
 body
 {
     overflow: hidden;
+    background-image: radial-gradient(circle farthest-side at center top, #2f3d55 0%, #151c29 100%);
+    height: 100vh;
 }
 
 .webgl
