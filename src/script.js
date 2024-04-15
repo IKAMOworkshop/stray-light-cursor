@@ -1,151 +1,148 @@
-import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import GUI from 'lil-gui'
+import Experience from './Experience/Experience.js';
 
-import raymarchingVertex from './shader/distortion/vertex.glsl'
-import raymarchingFragment from './shader/distortion/fragment.glsl'
+const experience = new Experience(document.querySelector('canvas.webgl'));
+
+// import * as THREE from 'three'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+// import GUI from 'lil-gui'
+
+// import raymarchingVertex from './shader/distortion/vertex.glsl'
+// import raymarchingFragment from './shader/distortion/fragment.glsl'
 
 
-/**
- * Base
- */
-// Debug
-const gui = new GUI()
-const debugObject = {}
-debugObject.progress = 0
-gui.add(debugObject, 'progress').min(0).max(1).step(.1)
+// /**
+//  * Base
+//  */
+// // Debug
+// const gui = new GUI()
+// const debugObject = {}
+// debugObject.progress = 0
+// gui.add(debugObject, 'progress').min(0).max(1).step(.1)
 
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
+// // Canvas
+// const canvas = document.querySelector('canvas.webgl')
 
-// Scene
-const scene = new THREE.Scene()
+// // Scene
+// const scene = new THREE.Scene()
 
-/**
- * Textures
- */
-const textureLoader = new THREE.TextureLoader()
-const matcapTextureOne = textureLoader.load('./textures/matcaps/7.png')
-const matcapTextureTwo = textureLoader.load('./textures/matcaps/2.png')
+// /**
+//  * Textures
+//  */
+// const textureLoader = new THREE.TextureLoader()
 
-/**
- * Test mesh
- */
-// Geometry
-const geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
+// /**
+//  * Test mesh
+//  */
+// // Geometry
+// const geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
 
-// Material
-const material = new THREE.ShaderMaterial({
-    side: THREE.DoubleSide,
-    uniforms:{
-        uTime: new THREE.Uniform(0),
-        uResolution: new THREE.Uniform(new THREE.Vector4()),
-    },
-    vertexShader: raymarchingVertex,
-    fragmentShader: raymarchingFragment
-})
+// // Material
+// const material = new THREE.ShaderMaterial({
+//     side: THREE.DoubleSide,
+//     uniforms:{
+//         uTime: new THREE.Uniform(0),
+//         uResolution: new THREE.Uniform(new THREE.Vector4()),
+//     },
+//     vertexShader: raymarchingVertex,
+//     fragmentShader: raymarchingFragment
+// })
 
-// Mesh
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+// // Mesh
+// const mesh = new THREE.Mesh(geometry, material)
+// scene.add(mesh)
 
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
+// /**
+//  * Sizes
+//  */
+// const sizes = {
+//     width: window.innerWidth,
+//     height: window.innerHeight
+// }
 
-const imageAspect = 1;
+// const imageAspect = 1;
 
-let a1
-let a2
+// let a1
+// let a2
 
-if(sizes.height/sizes.width > imageAspect){
-    a1 = (sizes.width/sizes.height) * imageAspect
-    a2 = 1
-} else {
-    a1 = 1
-    a2 = (sizes.height/sizes.width) * imageAspect
-}
+// if(sizes.height/sizes.width > imageAspect){
+//     a1 = (sizes.width/sizes.height) * imageAspect
+//     a2 = 1
+// } else {
+//     a1 = 1
+//     a2 = (sizes.height/sizes.width) * imageAspect
+// }
 
-material.uniforms.uResolution.value.x = sizes.width
-material.uniforms.uResolution.value.y = sizes.height
-material.uniforms.uResolution.value.z = a1
-material.uniforms.uResolution.value.w = a2
+// material.uniforms.uResolution.value.x = sizes.width
+// material.uniforms.uResolution.value.y = sizes.height
+// material.uniforms.uResolution.value.z = a1
+// material.uniforms.uResolution.value.w = a2
 
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+// window.addEventListener('resize', () =>
+// {
+//     // Update sizes
+//     sizes.width = window.innerWidth
+//     sizes.height = window.innerHeight
 
-    const imageAspect = 1;
+//     if(sizes.height/sizes.width > imageAspect){
+//         a1 = (sizes.width/sizes.height) * imageAspect
+//         a2 = 1
+//     } else {
+//         a1 = 1
+//         a2 = (sizes.height/sizes.width) * imageAspect
+//     }
 
-    let a1
-    let a2
+//     material.uniforms.uResolution.value.x = sizes.width
+//     material.uniforms.uResolution.value.y = sizes.height
+//     material.uniforms.uResolution.value.z = a1
+//     material.uniforms.uResolution.value.w = a2
 
-    if(sizes.height/sizes.width > imageAspect){
-        a1 = (sizes.width/sizes.height) * imageAspect
-        a2 = 1
-    } else {
-        a1 = 1
-        a2 = (sizes.height/sizes.width) * imageAspect
-    }
+//     // Update camera
+//     camera.aspect = sizes.width / sizes.height
+//     camera.updateProjectionMatrix()
 
-    material.uniforms.uResolution.value.x = sizes.width
-    material.uniforms.uResolution.value.y = sizes.height
-    material.uniforms.uResolution.value.z = a1
-    material.uniforms.uResolution.value.w = a2
+//     // Update renderer
+//     renderer.setSize(sizes.width, sizes.height)
+//     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+// })
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+// /**
+//  * Camera
+//  */
+// // Base camera
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000)
+// camera.position.set(0, 0, 2)
+// scene.add(camera)
 
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
+// // Controls
+// const controls = new OrbitControls(camera, canvas)
+// controls.enableDamping = true
 
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000)
-camera.position.set(0, 0, 2)
-scene.add(camera)
+// /**
+//  * Renderer
+//  */
+// const renderer = new THREE.WebGLRenderer({
+//     canvas: canvas
+// })
+// renderer.setSize(sizes.width, sizes.height)
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+// /**
+//  * Animate
+//  */
+// const clock = new THREE.Clock()
 
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+// const tick = () =>
+// {
+//     const elapsedTime = clock.getElapsedTime()
 
-/**
- * Animate
- */
-const clock = new THREE.Clock()
+//     // Update controls
+//     controls.update()
 
-const tick = () =>
-{
-    const elapsedTime = clock.getElapsedTime()
+//     // Render
+//     renderer.render(scene, camera)
 
-    // Update controls
-    controls.update()
+//     // Call tick again on the next frame
+//     window.requestAnimationFrame(tick)
+// }
 
-    // Render
-    renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
-
-tick()
+// tick()
