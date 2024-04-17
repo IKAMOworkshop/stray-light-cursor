@@ -21,7 +21,7 @@ export default class Floor{
         this.material = new THREE.MeshStandardMaterial({
             color: 0x415575,
             metalness: .5,
-            smoothness: .5
+            roughness: 0.5
         })
     }
 
