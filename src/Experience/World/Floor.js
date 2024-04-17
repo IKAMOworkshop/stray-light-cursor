@@ -6,7 +6,7 @@ export default class Floor{
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
-        this.scene.fog = new THREE.Fog( 0x232e40, 1, 40)
+        this.scene.fog = new THREE.Fog( 0x232e40, 5, 40)
 
         this.setGeometry()
         this.setMaterial()
